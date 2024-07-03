@@ -22,13 +22,20 @@ const RegProgram = db.define(
       },
     },
     umur_reg: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
     tempat_tanggal_lahir: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    no_telepon: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -57,6 +64,20 @@ const RegProgram = db.define(
       },
     },
     alamat: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    kecamatan: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    desa: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -106,6 +127,10 @@ const RegProgram = db.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    semester_s3: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     semester_diploma: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -130,6 +155,7 @@ const RegProgram = db.define(
     },
     gambar_databpp: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     gambar_ketpimpinan: {
       type: DataTypes.STRING,

@@ -19,6 +19,7 @@ import Suratkadis from "./routes/SuratKadisRoute.js";
 import Suratolahraga from "./routes/SuratOlahragaRoute.js";
 import Suratsekretariat from "./routes/SuratSekretariatRoute.js";
 import Suratpemuda from "./routes/SuratPemudaRoute.js";
+import ProgramKerja from "./routes/ProgramKerjaRoute.js";
 
 dotenv.config();
 
@@ -70,6 +71,7 @@ app.use(Suratkadis);
 app.use(Suratolahraga);
 app.use(Suratsekretariat);
 app.use(Suratpemuda);
+app.use(ProgramKerja);
 
 app.get("/", (req, res) => {
   res.send("<h1>BackendDispora</h1>");

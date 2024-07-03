@@ -1,5 +1,4 @@
 import ProgramOlahraga from "../models/ProgramOlahragaModel.js";
-import router from "../routes/UserRoute.js";
 import path from "path";
 import fs from "fs";
 

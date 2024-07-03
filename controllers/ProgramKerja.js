@@ -1,20 +1,26 @@
+import ProgramKerja from "../models/ProgramKerjaModel.js";
 import { response } from "express";
-import Berita from "../models/BeritaPemudaModels.js";
 import path from "path";
 import fs from "fs";
 
-export const getBerita = async (req, res) => {
+export const getProgramKerja = async (req, res) => {
   try {
-    const response = await Berita.findAll({});
+    const response = await ProgramKerja.findAll({});
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-export const getBeritaByid = async (req, res) => {
+export const getProgramKerjaById = async (req, res) => {
   try {
-    const response = await Berita.findOne({
+    const response = await ProgramKerja.findOne({
+      attributes: [
+        "uuid",
+        "tahun_program_kerja",
+        "gambar_program_kerja",
+        "URL",
+      ],
       where: {
         id: req.params.id,
       },
@@ -24,13 +30,11 @@ export const getBeritaByid = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export const createBerita = async (req, res) => {
+
+export const createProgramKerja = async (req, res) => {
   if (!req.files || !req.files.file)
     return res.status(400).json({ msg: "No file Upload" });
-  const judul_berita = req.body.judul_berita;
-  const nama_pembuat_berita = req.body.nama_pembuat_berita;
-  const isi_berita = req.body.isi_berita;
-  const tanggal_berita = req.body.tanggal_berita;
+  const tahun_program_kerja = req.body.tahun_program_kerja;
   const file = req.files.file;
   const fileSize = file.data.length;
   const ext = path.extname(file.name);
@@ -42,36 +46,35 @@ export const createBerita = async (req, res) => {
   if (!allowedType.includes(ext.toLowerCase()))
     return res.status(422).json({ msg: "invalid images" });
   if (fileSize > 5000000)
-    return res.status(422).json({ msg: " gambar harus kurang dari 5 MB" });
+    return res.status(422).json({ msg: " images must be less 5 MB" });
 
   file.mv(`./public/images/${fileName}`),
     async (err) => {
       if (err) return res.status(500).json({ msg: err.message });
     };
   try {
-    await Berita.create({
-      nama_pembuat_berita: nama_pembuat_berita,
-      judul_berita: judul_berita,
-      isi_berita: isi_berita,
-      tanggal_berita: tanggal_berita,
-      gambar: fileName,
+    await ProgramKerja.create({
+      tahun_program_kerja: tahun_program_kerja,
+      gambar_program_olahraga: fileName,
       URL: URL,
     });
-    res.status(201).json({ msg: "Berita berhasil ditambahkan" });
+    res.status(201).json({ msg: "Program Kerja berhasil ditambahkan" });
   } catch (error) {
     console.log(error.message);
   }
 };
-export const updateBerita = async (req, res) => {
-  const berita = await Berita.findOne({
+
+export const updateProgramKerja = async (req, res) => {
+  const program = await ProgramKerja.findOne({
     where: {
       id: req.params.id,
     },
   });
-  if (!berita) return res.status(404).json({ msg: "berita tidak ditemuka" });
+  if (!program)
+    return res.status(404).json({ msg: "program kerja tidak ditemuka" });
   let fileName = "";
   if (req.files === null) {
-    fileName = Berita.gambar_berita;
+    fileName = ProgramKerja.gambar_program_kerja;
   } else {
     const file = req.files.file;
     const fileSize = file.data.length;
@@ -84,7 +87,7 @@ export const updateBerita = async (req, res) => {
     if (fileSize > 5000000)
       return res.status(422).json({ msg: " gambar harus kurang dari 5 MB" });
 
-    const filepath = `./public/images/${berita.gambar_berita}`;
+    const filepath = `./public/images/${program.gambar_program_kerja}`;
     try {
       fs.unlinkSync(filepath);
     } catch (err) {
@@ -100,19 +103,17 @@ export const updateBerita = async (req, res) => {
       if (err) return res.status(500).json({ msg: err.message });
     });
   }
-  const judul_berita = req.body.judul_berita;
-  const nama_pembuat_berita = req.body.nama_pembuat_berita;
-  const isi_berita = req.body.isi_berita;
-  const tanggal_berita = req.body.tanggal_berita;
+  const nama_pembuat_program_olahraga = req.body.nama_pembuat_program_olahraga;
+  const kontak_admin_program_olahraga = req.body.kontak_admin_program_olahraga;
+  const nama_program_olahraga = req.body.nama_program_olahraga;
   const URL = `${req.protocol}://${req.get("host")}/images/${fileName}`;
   try {
-    await Berita.update(
+    await ProgramOlahraga.update(
       {
-        nama_pembuat_berita: nama_pembuat_berita,
-        judul_berita: judul_berita,
-        isi_berita: isi_berita,
-        tanggal_berita: tanggal_berita,
-        gambar_berita: fileName,
+        nama_pembuat_program_olahraga: nama_pembuat_program_olahraga,
+        kontak_admin_program_olahraga: kontak_admin_program_olahraga,
+        nama_program_olahraga: nama_program_olahraga,
+        gambar_program_olahraga: fileName,
         URL: URL,
       },
       {
@@ -121,26 +122,26 @@ export const updateBerita = async (req, res) => {
         },
       }
     );
-    res.status(200).json({ msg: "Berita Pemuda berhasil Terupdate" });
+    res.status(200).json({ msg: "Program Olahraga berhasil Terupdate" });
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const deleteBerita = async (req, res) => {
-  const berita = await Berita.findOne({
+export const deleteProgramKerja = async (req, res) => {
+  const program = await ProgramKerja.findOne({
     where: {
-      id: req.params.id,
+      uuid: req.params.id,
     },
   });
 
-  if (!berita) return res.status(404).json({ msg: "berita tidak ditemukan" });
+  if (!program) return res.status(404).json({ msg: "berita tidak ditemukan" });
   try {
-    await Berita.destroy({
+    await ProgramKerja.destroy({
       where: {
-        id: berita.id,
+        id: program.id,
       },
     });
-    res.status(201).json({ msg: " Berita berhasil dihapus" });
+    res.status(201).json({ msg: "Program berhasil dihapus" });
   } catch (error) {}
 };

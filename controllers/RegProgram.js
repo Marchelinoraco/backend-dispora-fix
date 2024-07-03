@@ -57,10 +57,13 @@ export const createRegProgram = async (req, res) => {
   const nama_reg = req.body.nama_reg;
   const umur_reg = req.body.umur_reg;
   const tempat_tanggal_lahir = req.body.tempat_tanggal_lahir;
+  const no_telepon = req.body.no_telepon;
   const nim = req.body.nim;
   const IPK = req.body.IPK;
   const nik = req.body.nik;
   const alamat = req.body.alamat;
+  const kecamatan = req.body.kecamatan;
+  const desa = req.body.desa;
   const universitas = req.body.universitas;
   const fakultas = req.body.fakultas;
   const jurusan = req.body.jurusan;
@@ -68,6 +71,7 @@ export const createRegProgram = async (req, res) => {
   const yudisium = req.body.yudisium;
   const semester_s1 = req.body.semester_s1;
   const semester_s2 = req.body.semester_s2;
+  const semester_s3 = req.body.semester_s3;
   const semester_diploma = req.body.semester_diploma;
   const gambar_ktp = req.files.gambar_ktp;
   const gambar_khs = req.files.gambar_khs;
@@ -193,9 +197,13 @@ export const createRegProgram = async (req, res) => {
       nama_reg: nama_reg,
       umur_reg: umur_reg,
       tempat_tanggal_lahir: tempat_tanggal_lahir,
+      no_telepon: no_telepon,
       nim: nim,
+      IPK: IPK,
       nik: nik,
       alamat: alamat,
+      kecamatan: kecamatan,
+      desa: desa,
       universitas: universitas,
       fakultas: fakultas,
       jurusan: jurusan,
@@ -203,6 +211,7 @@ export const createRegProgram = async (req, res) => {
       yudisium: yudisium,
       semester_s1: semester_s1,
       semester_s2: semester_s2,
+      semester_s3: semester_s3,
       semester_diploma: semester_diploma,
       gambar_ktp: file1,
       gambar_khs: file2,
