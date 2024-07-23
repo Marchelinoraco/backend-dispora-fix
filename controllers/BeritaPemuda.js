@@ -24,6 +24,7 @@ export const getBeritaByid = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const createBerita = async (req, res) => {
   if (!req.files || !req.files.file)
     return res.status(400).json({ msg: "No file Upload" });

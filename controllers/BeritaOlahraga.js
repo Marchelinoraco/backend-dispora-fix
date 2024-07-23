@@ -15,14 +15,6 @@ export const getBeritaOlahraga = async (req, res) => {
 export const getBeritaOlahragaByid = async (req, res) => {
   try {
     const response = await BeritaOlahraga.findOne({
-      attributes: [
-        "uuid",
-        "nama_pembuat_berita_olahraga",
-        "judul_berita_olahraga",
-        "isi_berita_olahraga",
-        "URL",
-        "tanggal_berita_olahraga",
-      ],
       where: {
         id: req.params.id,
       },
@@ -32,6 +24,7 @@ export const getBeritaOlahragaByid = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const createBeritaOlahraga = async (req, res) => {
   if (!req.files || !req.files.file)
     return res.status(400).json({ msg: "No file Upload" });
