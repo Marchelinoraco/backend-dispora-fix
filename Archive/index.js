@@ -43,7 +43,6 @@ app.use(
     store: store,
     cookie: {
       secure: "auto",
-      sameSite: "none",
     },
   })
 );
@@ -51,7 +50,7 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: "http://217.15.171.240:4000",
+    origin: "http://localhost:3000",
   })
 );
 
