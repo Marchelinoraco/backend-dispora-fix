@@ -276,7 +276,7 @@ export const updateRegProgram = async (req, res) => {
       uuid: req.params.id,
     },
   });
-  if (!program) return res.status(404).json({ msg: "berita tidak ditemukan" });
+  if (!program) return res.status(404).json({ msg: "Data tidak ditemukan" });
   try {
     await RegProgram.update(
       {
@@ -311,7 +311,7 @@ export const updateRegProgram = async (req, res) => {
         },
       }
     );
-    res.status(200).json({ msg: "Program Berhasil dipebarui" });
+    res.status(200).json({ msg: "Data Berhasil dipebarui" });
   } catch (error) {}
 };
 
