@@ -14,6 +14,10 @@ const Galeri = db.define(
         notEmpty: true,
       },
     },
+    nama_gambar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     gambar: DataTypes.STRING,
     URL: DataTypes.STRING,
   },

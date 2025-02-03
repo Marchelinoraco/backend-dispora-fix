@@ -69,6 +69,7 @@ export const createRegProgram = async (req, res) => {
   const jurusan = req.body.jurusan;
   const wisuda = req.body.wisuda;
   const yudisium = req.body.yudisium;
+  const keterangan = req.body.keterangan;
   const semester_s1 = req.body.semester_s1;
   const semester_s2 = req.body.semester_s2;
   const semester_s3 = req.body.semester_s3;
@@ -209,6 +210,7 @@ export const createRegProgram = async (req, res) => {
       jurusan: jurusan,
       wisuda: wisuda,
       yudisium: yudisium,
+      keterangan: keterangan,
       semester_s1: semester_s1,
       semester_s2: semester_s2,
       semester_s3: semester_s3,
@@ -244,75 +246,30 @@ export const createRegProgram = async (req, res) => {
 };
 
 export const updateRegProgram = async (req, res) => {
-  const {
-    nama_reg,
-    umur_reg,
-    gambar_ktp,
-    gambar_khs,
-    gambar_spbupati,
-    gambar_biodatareg,
-    gambar_pasfoto,
-    gambar_belumbea,
-    gambar_databpp,
-    gambar_ketpimpinan,
-    gambar_kartumahasiswa,
-    gambar_kk,
-    gambar_proposalakhir,
-    URL_ktp,
-    URL_khs,
-    URL_spbupati,
-    URL_biodatareg,
-    URL_pasfoto,
-    URL_belumbea,
-    URL_databpp,
-    URL_ketpimpinan,
-    URL_kartumahasiswa,
-    URL_kk,
-    URL_proposalakhir,
-  } = req.body;
-
-  const regprogram = await RegProgram.findOne({
-    where: {
-      uuid: req.params.id,
-    },
-  });
-  if (!program) return res.status(404).json({ msg: "Data tidak ditemukan" });
   try {
-    await RegProgram.update(
-      {
-        nama_reg: nama_reg,
-        umur_reg: umur_reg,
-        gambar_ktp: gambar_ktp,
-        gambar_khs: gambar_khs,
-        gambar_spbupati: gambar_spbupati,
-        gambar_biodatareg: gambar_biodatareg,
-        gambar_pasfoto: gambar_pasfoto,
-        gambar_belumbea: gambar_belumbea,
-        gambar_databpp: gambar_databpp,
-        gambar_ketpimpinan: gambar_ketpimpinan,
-        gambar_kartumahasiswa: gambar_kartumahasiswa,
-        gambar_kk: gambar_kk,
-        gambar_proposalakhir: gambar_proposalakhir,
-        URL_ktp: URL_ktp,
-        URL_khs: URL_khs,
-        URL_spbupati: URL_spbupati,
-        URL_biodatareg: URL_biodatareg,
-        URL_pasfoto: URL_pasfoto,
-        URL_belumbea: URL_belumbea,
-        URL_databpp: URL_databpp,
-        URL_ketpimpinan: URL_ketpimpinan,
-        URL_kartumahasiswa: URL_kartumahasiswa,
-        URL_kk: URL_kk,
-        URL_proposalakhir: URL_proposalakhir,
+    const regprogram = await RegProgram.findOne({
+      where: {
+        uuid: req.params.id, // Sesuai dengan UUID yang dikirim
       },
+    });
+
+    if (!regprogram) {
+      return res.status(404).json({ msg: "Data tidak ditemukan" });
+    }
+
+    await RegProgram.update(
+      { keterangan: req.body.keterangan }, // Hanya memperbarui kolom yang diinginkan
       {
         where: {
-          id: regprogram.id,
+          uuid: req.params.id,
         },
       }
     );
-    res.status(200).json({ msg: "Data Berhasil dipebarui" });
-  } catch (error) {}
+
+    res.status(200).json({ msg: "Keterangan berhasil diperbarui" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const deleteRegProgram = async (req, res) => {

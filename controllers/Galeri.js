@@ -26,6 +26,7 @@ export const getGaleriByid = async (req, res) => {
 export const createGaleri = async (req, res) => {
   if (!req.files || !req.files.file)
     return res.status(400).json({ msg: "No file Upload" });
+  const nama_gambar = req.body.nama_gambar;
   const file = req.files.file;
   const fileSize = file.data.length;
   const ext = path.extname(file.name);
@@ -43,8 +44,10 @@ export const createGaleri = async (req, res) => {
     async (err) => {
       if (err) return res.status(500).json({ msg: err.message });
     };
+
   try {
     await Galeri.create({
+      nama_gambar: nama_gambar,
       gambar: fileName,
       URL: URL,
     });

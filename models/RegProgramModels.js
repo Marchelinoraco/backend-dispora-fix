@@ -105,6 +105,13 @@ const RegProgram = db.define(
         notEmpty: true,
       },
     },
+    keterangan: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     wisuda: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -121,19 +128,15 @@ const RegProgram = db.define(
     },
     semester_s1: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     semester_s2: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     semester_s3: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     semester_diploma: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     gambar_ktp: {
       type: DataTypes.STRING,
